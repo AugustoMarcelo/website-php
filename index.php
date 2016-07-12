@@ -1,27 +1,17 @@
 <?php
-    class User {
-        public function __construct() {
-            //echo 'Construtor chamado';
-        }
+    require 'classes/Database.php';
 
-        public function __destruct() {
-            //echo 'Destrutor chamado';
-        }
-
-        public function register() {
-            echo 'Usuário registrado';
-        }
-
-        public function login($username, $password) {
-            $this->auth_user($username, $password);
-        }
-
-        public function auth_user($username, $password) {
-            echo $username . ' está logado.';
-        }
-    }
-
-    $User = new User;
-    //$User->register();
-    $User->login('Marcelo', '12344');
+    $database = new Database;
+    $database->query('SELECT * FROM Posts');
+    $rows = $database->resultset();    
 ?>
+
+<h1>Posts</h1>
+<div>
+<?php foreach($rows as $row) : ?>
+    <div>
+        <h3><?php echo $row['title']; ?></h3>
+        <p><?php echo $row['body']; ?></p>
+    </div>
+<?php endforeach ?>
+</div>
