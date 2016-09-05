@@ -1,17 +1,26 @@
 <?php
-    require 'classes/Database.php';
+    //Start Session
+    session_start();
 
-    $database = new Database;
-    $database->query('SELECT * FROM Posts');
-    $rows = $database->resultset();    
+    //Include config
+    require('config.php');
+    
+    require('classes/Messages.php');
+    require('classes/Bootstrap.php');
+    require('classes/Controller.php');
+    require('classes/Model.php');
+
+    require('controllers/Home.php');
+    require('controllers/Users.php');
+    require('controllers/Shares.php');
+
+    require('models/home.php');
+    require('models/user.php');
+    require('models/share.php');
+
+    $bootstrap = new Bootstrap($_GET);
+    $controller = $bootstrap->createController();
+    if($controller) {
+        $controller->executeAction();
+    }
 ?>
-
-<h1>Posts</h1>
-<div>
-<?php foreach($rows as $row) : ?>
-    <div>
-        <h3><?php echo $row['title']; ?></h3>
-        <p><?php echo $row['body']; ?></p>
-    </div>
-<?php endforeach ?>
-</div>
